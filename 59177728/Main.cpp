@@ -114,6 +114,21 @@ std::string Method6(const std::string &str, int val) {
   }
   return "";
 }
+#include  <unordered_map>
+std::string Method7(const std::string &str, int val) {
+  static std::unordered_map<std::string, std::vector<std::string>> stringMap{
+      {"FIRST", {"FIRST", "hai1", "bye1"}},
+      {"SECOND", {"Hello1", "SECOND", "bye1"}},
+      {"THIRD", {"Hello1", "hai1", "THIRD"}},
+      {"FOURTH", {"FOURTH", "hai1", "bye1"}},
+      {"FIFTH", {"Hello1", "FIFTH", "bye1"}}};
+  auto index = stringMap.find(str);
+  if (index != stringMap.end()) {
+    return index->second[val];
+  }
+  return "";
+}
+
 using CompareMethod = std::function<std::string(const std::string &, int)>;
 bool validate(CompareMethod method, const std::string &name) {
   std::map<std::string, int> testResult{
@@ -160,6 +175,7 @@ int main(int argc, char **argv) {
     ADD_CASE(4);
     ADD_CASE(5);
     ADD_CASE(6);
+    ADD_CASE(7);
   }
   return 0;
 }
